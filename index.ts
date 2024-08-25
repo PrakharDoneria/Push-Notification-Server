@@ -9,7 +9,7 @@ const router = new Router();
 // Load environment variables
 const env = config();
 const vapidPublicKey = 'BMUuNRRgKRE-epkmw6ciJYH-VSkNKpu24HGGI1dvYmcsNnQD8etMDvD1hJ0nIfoFtrj74uEivAxajdFj7oeQ7A4';
-const vapidPrivateKey = env.VAPID_PRIVATE_KEY || 'DEFAULT_PRIVATE_KEY';
+const vapidPrivateKey = 'FbE8t8N1fwZLibwr8wjMORs0VNEdbCWkX6y3621XxGQ';
 
 // Validate and set VAPID keys
 if (!vapidPublicKey || !vapidPrivateKey) {
