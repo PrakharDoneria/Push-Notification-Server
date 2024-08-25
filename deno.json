@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["deno.ns", "deno.window"]
+  },
+  "tasks": {
+    "start": "deno run --allow-net --allow-read --allow-write index.ts"
+  }
+}
