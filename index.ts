@@ -1,3 +1,4 @@
+import { config } from "https://deno.land/x/dotenv/mod.ts";
 import webpush from "npm:web-push";
 import { Application, Router } from "https://deno.land/x/oak/mod.ts";
 
@@ -5,16 +6,28 @@ const kv = await Deno.openKv();
 const app = new Application();
 const router = new Router();
 
+const env = config();
+const vapidKeys = {
+  publicKey: env.VAPID_PUBLIC_KEY || 'DEFAULT_PUBLIC_KEY', 
+  privateKey: env.VAPID_PRIVATE_KEY || 'DEFAULT_PRIVATE_KEY',
+};
+
+// Set VAPID details
+webpush.setVapidDetails(
+  'mailto:example@yourdomain.org',
+  vapidKeys.publicKey,
+  vapidKeys.privateKey
+);
+
 // Endpoint to generate VAPID keys
 router.get("/generate", (ctx) => {
-  const vapidKeys = webpush.generateVAPIDKeys();
   console.log("Public Key:");
   console.log(vapidKeys.publicKey);
   console.log("Private Key:");
   console.log(vapidKeys.privateKey);
 
   ctx.response.body = {
-    message: "VAPID keys generated successfully. Check console for details.",
+    message: "VAPID keys set successfully.",
     publicKey: vapidKeys.publicKey,
     privateKey: vapidKeys.privateKey,
   };
