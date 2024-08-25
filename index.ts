@@ -6,30 +6,33 @@ const kv = await Deno.openKv();
 const app = new Application();
 const router = new Router();
 
+// Load environment variables
 const env = config();
-const vapidKeys = {
-  publicKey: env.VAPID_PUBLIC_KEY, 
-  privateKey: env.VAPID_PRIVATE_KEY,
-};
+const vapidPublicKey = env.VAPID_PUBLIC_KEY || 'DEFAULT_PUBLIC_KEY';
+const vapidPrivateKey = env.VAPID_PRIVATE_KEY || 'DEFAULT_PRIVATE_KEY';
 
-// Set VAPID details
+// Validate and set VAPID keys
+if (!vapidPublicKey || !vapidPrivateKey) {
+  throw new Error("VAPID keys are not set. Please provide valid keys.");
+}
+
 webpush.setVapidDetails(
-  'mailto:example@yourdomain.org',
-  vapidKeys.publicKey,
-  vapidKeys.privateKey
+  'mailto: protecgamesofficial@gmail.com',
+  vapidPublicKey,
+  vapidPrivateKey
 );
 
 // Endpoint to generate VAPID keys
 router.get("/generate", (ctx) => {
   console.log("Public Key:");
-  console.log(vapidKeys.publicKey);
+  console.log(vapidPublicKey);
   console.log("Private Key:");
-  console.log(vapidKeys.privateKey);
+  console.log(vapidPrivateKey);
 
   ctx.response.body = {
     message: "VAPID keys set successfully.",
-    publicKey: vapidKeys.publicKey,
-    privateKey: vapidKeys.privateKey,
+    publicKey: vapidPublicKey,
+    privateKey: vapidPrivateKey,
   };
 });
 
