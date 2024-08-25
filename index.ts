@@ -8,8 +8,8 @@ const router = new Router();
 
 const env = config();
 const vapidKeys = {
-  publicKey: env.VAPID_PUBLIC_KEY || 'DEFAULT_PUBLIC_KEY', 
-  privateKey: env.VAPID_PRIVATE_KEY || 'DEFAULT_PRIVATE_KEY',
+  publicKey: env.VAPID_PUBLIC_KEY, 
+  privateKey: env.VAPID_PRIVATE_KEY,
 };
 
 // Set VAPID details
